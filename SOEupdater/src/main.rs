@@ -1,8 +1,8 @@
 mod manifest;
 // I need to stop procrastinating
 use std::env;
+use SOEcommon::verify;
 
-use macroquad::{prelude::*, ui::root_ui};
 
 
 
@@ -10,15 +10,15 @@ use macroquad::{prelude::*, ui::root_ui};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    
-    
+    println!("SOE updater by Manfred");
+    let soe = verify();
+    //println!("{:#?}",soe);
     // checks the command line arguments 
     if args.len() >= 2{
         
 
         
         if args[1] == "--check_update" || args[1] == "-c" {
-            println!("SOE updater by Manfred");
 
             
         
@@ -45,7 +45,7 @@ fn main() {
 }
 pub fn download(){
     // Downloads the latest version of the game
-    println!("SOE updater by Manfred");
+    
 
     println!("Downloading important files");
 
