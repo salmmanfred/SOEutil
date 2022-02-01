@@ -1,11 +1,17 @@
 use openfile;
-use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fs;
 use std::io;
 use std::thread;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 
-#[derive(Serialize, Deserialize, Debug)]
+const EXEPATH: &'static str = "./exe.scrap";
+const MODPATH: &'static str = "./mods.scrap";
+pub const MANPATH: &'static str = "./mani.scrap";
+
+
 
 pub struct Man {
     pub version: String,
@@ -14,7 +20,7 @@ pub struct Man {
 }
 impl Man {
     pub fn new() -> Self {
-        let strs = openfile::read_file("./mani.scrap").unwrap();
+        let strs = openfile::read_file(MANPATH).unwrap();
 
         let json: Value = serde_json::from_str(&strs).unwrap();
         let version = json[0]["tag_name"].as_str().unwrap();
@@ -47,26 +53,36 @@ impl Man {
         let pth = self.exe.clone();
         let l = thread::spawn(|| {
 
-            download_e(pth, "./exe.scrap");
+            download_e(pth, EXEPATH);
         });
         l.join().unwrap();
     }
     pub fn download_mods(&self) {
         let pth = self.mods.clone();
         let l = thread::spawn(|| {
-            download_e(pth, "./mods.scrap");
+            download_e(pth, MODPATH);
         });
         l.join().unwrap();
     }
     pub fn unzip(&self) {
-        unzip("./game","./exe.scrap");
-        unzip("./game/exe","./mods.scrap");
+        unzip("./soe",EXEPATH);
+        unzip("./soe/exe",MODPATH);
     }
+    pub fn cleanup(&self){
+        openfile::remove_file(EXEPATH);
+        openfile::remove_file(MODPATH);
+        openfile::remove_file(MANPATH);
+
+
+    }
+    
 }
 fn download_e(pth: String, name: &str) {
     println!("{}",pth);
     let resp = attohttpc::get(pth).send().expect("msg");
+    //println!("Downloaded. Saving to file..");
     openfile::write_file_bytes(name, resp.bytes().unwrap()).unwrap();
+    
 }
 
 fn unzip(overpath: &str,path: &str) -> i32 {
@@ -90,12 +106,13 @@ fn unzip(overpath: &str,path: &str) -> i32 {
         }
 
         if (&*file.name()).ends_with('/') {
-            println!("File {} extracted to \"{}\"", i, outpath.display());
+            println!("File {} extracted to \"{}/{}\"", i,overpath ,outpath.display());
             fs::create_dir_all(&format!("{overpath}/{}",outpath.display()));
         } else {
             println!(
-                "File {} extracted to \"{}\" ({} bytes)",
+                "File {} extracted to \"{}/{}\" ({} bytes)",
                 i,
+                overpath,
                 outpath.display(),
                 file.size()
             );
@@ -112,4 +129,18 @@ fn unzip(overpath: &str,path: &str) -> i32 {
         
     }
     return 0;
+}
+pub fn save_file(names: &str, cont: Vec<u8>){
+    
+    
+    let path = Path::new(&names);
+    
+
+
+    let mut file = File::create(&path).expect("error saving file0");
+
+
+    
+        file.write_all(&cont).expect("error saving file");
+    
 }
