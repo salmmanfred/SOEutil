@@ -54,10 +54,10 @@ pub fn download(){
     println!("Done");
     let man = manifest::Man::new();
     println!("Downloading the game");
-    //man.download_exe();
+    man.download_exe();
     println!("Done");
     println!("Downloading the mod.zip");
-    //man.download_mods();
+    man.download_mods();
     println!("Done");
 
     man.unzip();
