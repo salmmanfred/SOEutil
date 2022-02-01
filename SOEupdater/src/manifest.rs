@@ -18,19 +18,35 @@ impl Man {
 
         let json: Value = serde_json::from_str(&strs).unwrap();
         let version = json[0]["tag_name"].as_str().unwrap();
+        let assets = json[0]["assets"].clone();
+        let mut exe_path = "";
+        let mut mod_path = "";
+
+
+        for (a,x) in assets.as_array().unwrap().iter().enumerate(){
+            match assets[a]["name"].clone().as_str().unwrap(){
+                "mods.zip" =>{mod_path = assets[a]["browser_download_url"].as_str().unwrap()},
+                "game.zip" => {exe_path = assets[a]["browser_download_url"].as_str().unwrap()},
+                a=>{
+                    println!("{a}")
+                }
+            }
+        }
+
         println!("Latest version: {}", version);
       
 
         Self {
             version: version.to_string(),
-            exe: "t".to_string(),
-            mods: "t".to_string(),
+            exe: exe_path.to_string(),
+            mods: mod_path.to_string(),
 
         }
     }
     pub fn download_exe(&self) {
         let pth = self.exe.clone();
         let l = thread::spawn(|| {
+
             download_e(pth, "./exe.scrap");
         });
         l.join().unwrap();
@@ -43,16 +59,17 @@ impl Man {
         l.join().unwrap();
     }
     pub fn unzip(&self) {
-        unzip("./exe.scrap");
-        unzip("./mods.scrap");
+        unzip("./game","./exe.scrap");
+        unzip("./game/exe","./mods.scrap");
     }
 }
 fn download_e(pth: String, name: &str) {
+    println!("{}",pth);
     let resp = attohttpc::get(pth).send().expect("msg");
     openfile::write_file_bytes(name, resp.bytes().unwrap()).unwrap();
 }
 
-fn unzip(path: &str) -> i32 {
+fn unzip(overpath: &str,path: &str) -> i32 {
     let fname = std::path::Path::new(path);
     let file = fs::File::open(&fname).unwrap();
 
@@ -74,7 +91,7 @@ fn unzip(path: &str) -> i32 {
 
         if (&*file.name()).ends_with('/') {
             println!("File {} extracted to \"{}\"", i, outpath.display());
-            fs::create_dir_all(&outpath).unwrap();
+            fs::create_dir_all(&format!("{overpath}/{}",outpath.display()));
         } else {
             println!(
                 "File {} extracted to \"{}\" ({} bytes)",
@@ -82,24 +99,17 @@ fn unzip(path: &str) -> i32 {
                 outpath.display(),
                 file.size()
             );
-            if let Some(p) = outpath.parent() {
+            /*if let Some(p) = outpath.parent() {
                 if !p.exists() {
                     fs::create_dir_all(&p).unwrap();
                 }
-            }
-            let mut outfile = fs::File::create(&outpath).unwrap();
-            io::copy(&mut file, &mut outfile).unwrap();
+            }*/
+            let mut outfile = fs::File::create(&format!("{overpath}/{}",outpath.display()));
+            io::copy(&mut file, &mut outfile.unwrap()).unwrap();
         }
 
-        // Get and Set permissions not really need since it dose not have or probably will have a linux version
-        #[cfg(unix)]
-        {
-            use std::os::unix::fs::PermissionsExt;
 
-            if let Some(mode) = file.unix_mode() {
-                fs::set_permissions(&outpath, fs::Permissions::from_mode(mode)).unwrap();
-            }
-        }
+        
     }
     return 0;
 }

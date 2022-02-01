@@ -3,6 +3,12 @@ use std::path::Path;
 #[derive(Debug)]
 pub struct SOE {
     exe_path: SoeFile,
+
+}
+impl SOE{
+    pub fn has_game(&self)->bool{
+        self.exe_path.unwrap()
+    }
 }
 
 #[derive(Debug)]
@@ -16,6 +22,14 @@ impl SoeFile{
             return SoeFile::Path(path)
         }else{
             return SoeFile::Notfound
+        }
+    }
+    pub fn unwrap(&self)->bool{
+        match self{
+            Notfound => false,
+            _=>{
+                true
+            }
         }
     }
 }

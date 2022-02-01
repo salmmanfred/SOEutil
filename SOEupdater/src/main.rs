@@ -37,11 +37,6 @@ fn main() {
         }
     }
     download();
-
-   
-    
-
-   
 }
 pub fn download(){
     // Downloads the latest version of the game
@@ -59,11 +54,12 @@ pub fn download(){
     println!("Done");
     let man = manifest::Man::new();
     println!("Downloading the game");
-    man.download_exe();
+    //man.download_exe();
     println!("Done");
-    println!("Downloading the tests");
-    // man.download_tests().await;
+    println!("Downloading the mod.zip");
+    //man.download_mods();
     println!("Done");
 
     man.unzip();
+    
 }
