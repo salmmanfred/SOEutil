@@ -2,35 +2,26 @@ mod manifest;
 use std::env;
 use SOEcommon::verify;
 
-use std::io::{stdin,stdout,Write};
 use manifest::MANPATH;
-
-
+use std::io::{stdin, stdout, Write};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     println!("SOE updater by Manfred");
     let soe = verify();
     let mut confirm = true;
-    // checks the command line arguments 
-    if args.len() >= 2{
-        
-
-        
+    // checks the command line arguments
+    if args.len() >= 2 {
         if args[1] == "--check_update" || args[1] == "-c" {
-
-            
-        
             let resp = attohttpc::get(
                 "https://api.github.com/repos/symphony-of-empires/symphony-of-empires/releases",
             )
             .send()
             .expect("msg");
             openfile::write_file_bytes(MANPATH, resp.bytes().unwrap()).unwrap();
-        
-           
+
             let man = manifest::Man::new();
-            println!("Latests version: {}",man.version);
+            println!("Latests version: {}", man.version);
             openfile::remove_file(MANPATH).unwrap();
             return ();
         }
@@ -39,16 +30,15 @@ fn main() {
         }
     }
     download();
-    if confirm{
-        let mut s=String::new();
+    if confirm {
+        let mut s = String::new();
         print!("Press enter to continue...");
-        let _=stdout().flush();
+        let _ = stdout().flush();
         stdin().read_line(&mut s).expect("");
     }
 }
-pub fn download(){
+pub fn download() {
     // Downloads the latest version of the game
-    
 
     println!("Downloading important files");
 
@@ -71,5 +61,4 @@ pub fn download(){
     println!("Cleaning up...");
     man.cleanup();
     println!("done");
-    
 }
