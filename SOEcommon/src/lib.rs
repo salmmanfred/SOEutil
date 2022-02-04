@@ -7,7 +7,12 @@ pub struct SOE {
 }
 impl SOE{
     pub fn has_game(&self)->bool{
+        //println!("{:#?}",&self);
         self.exe_path.unwrap()
+        
+    }
+    pub fn launch_game(&self){
+        println!("l");
     }
 }
 
@@ -19,19 +24,23 @@ pub enum SoeFile {
 impl SoeFile{
     pub fn reg(path: String)->SoeFile{
         if Path::new(&format!("{}", path)).exists(){
+            
             return SoeFile::Path(path)
         }else{
             return SoeFile::Notfound
         }
     }
     pub fn unwrap(&self)->bool{
+        
         match self{
-            Notfound => false,
-            _=>{
+            SoeFile::Path(_)=>{
                 true
             }
+            Notfound => false,
+           
         }
     }
+    
 }
 
 pub fn verify() -> SOE {
