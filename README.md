@@ -1,7 +1,8 @@
 # SOE utility repository
   
 ## Current projects:
-[ ] SOEupdater  
-  
+[X] SOEupdater  
+[ ] SOElauncher  
 ## Planned projects:
 SOEmodmanager
+

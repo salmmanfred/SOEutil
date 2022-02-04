@@ -1,46 +1,44 @@
 mod manifest;
-// I need to stop procrastinating
 use std::env;
 use SOEcommon::verify;
 
-
-
-
-
+use manifest::MANPATH;
+use std::io::{stdin, stdout, Write};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     println!("SOE updater by Manfred");
     let soe = verify();
-    //println!("{:#?}",soe);
-    // checks the command line arguments 
-    if args.len() >= 2{
-        
-
-        
+    let mut confirm = true;
+    // checks the command line arguments
+    if args.len() >= 2 {
         if args[1] == "--check_update" || args[1] == "-c" {
-
-            
-        
             let resp = attohttpc::get(
                 "https://api.github.com/repos/symphony-of-empires/symphony-of-empires/releases",
             )
             .send()
             .expect("msg");
-            openfile::write_file_bytes("./mani.scrap", resp.bytes().unwrap()).unwrap();
-        
-           
+            openfile::write_file_bytes(MANPATH, resp.bytes().unwrap()).unwrap();
+
             let man = manifest::Man::new();
-            println!("Latests version: {}",man.version);
-            openfile::remove_file("./mani.scrap").unwrap();
+            println!("Latests version: {}", man.version);
+            openfile::remove_file(MANPATH).unwrap();
             return ();
+        }
+        if args[1] == "--no_confirmation" || args[1] == "-nc" {
+            confirm = false;
         }
     }
     download();
+    if confirm {
+        let mut s = String::new();
+        print!("Press enter to continue...");
+        let _ = stdout().flush();
+        stdin().read_line(&mut s).expect("");
+    }
 }
-pub fn download(){
+pub fn download() {
     // Downloads the latest version of the game
-    
 
     println!("Downloading important files");
 
@@ -49,7 +47,7 @@ pub fn download(){
     )
     .send()
     .expect("msg");
-    openfile::write_file_bytes("./mani.scrap", resp.bytes().unwrap()).unwrap();
+    openfile::write_file_bytes(MANPATH, resp.bytes().unwrap()).unwrap();
 
     println!("Done");
     let man = manifest::Man::new();
@@ -59,7 +57,8 @@ pub fn download(){
     println!("Downloading the mod.zip");
     man.download_mods();
     println!("Done");
-
     man.unzip();
-    
+    println!("Cleaning up...");
+    man.cleanup();
+    println!("done");
 }
