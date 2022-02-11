@@ -13,11 +13,22 @@ impl SOE{
         self.exe_path.unwrap()
         
     }
+    pub fn has_file(&self, s: &str) -> bool{
+        match s{
+            "updater" =>{
+                return self.updater.unwrap()
+            }
+            _=>{
+                return false;
+            }
+        }
+    }
     pub fn launch_game(&self){
         #[cfg(target_os = "windows")]
         {
             let foo = Command::new(format!("{}",self.exe_path.form()))
                         .output().unwrap();
+            return ()
         }
         #[cfg(not(target_os = "windows"))]
         {

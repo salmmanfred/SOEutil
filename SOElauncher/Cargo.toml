@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 fltk = "1.2.29"
 SOEcommon = {path="../SOEcommon"}
+webbrowser = "0.5.5"
