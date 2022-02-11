@@ -1,7 +1,7 @@
 use std::env;
 mod ui;
-const VERSION: &str = "0.0.1";
-
+const VERSION: &str = "0.1";
+//mod popup;
 use SOEcommon::verify;
 
 fn main() {

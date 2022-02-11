@@ -1,6 +1,7 @@
 use fltk::{app, button::Button, prelude::*, window::Window, *};
 use webbrowser;
 use SOEcommon::SOE;
+//mod crate::popup;
 
 #[derive(Debug, Clone)]
 enum Message {
@@ -24,6 +25,7 @@ pub fn lui(game: SOE) {
     let (s, r) = app::channel::<Message>();
     but.emit(s.clone(), Message::Launch);
     repobut.emit(s, Message::Mess("repo".to_string()));
+    popup::pop("test");
 
     if !game.has_game() {
         but.deactivate()
