@@ -1,6 +1,8 @@
 use std::fs;
 use std::path::Path;
 use std::process::Command;
+pub mod servers;
+
 #[derive(Debug)]
 pub struct SOE {
     exe_path: SoeFile,
