@@ -1,41 +1,60 @@
+use fltk::{app, button::Button, prelude::*, window::Window, *};
+use webbrowser;
 use SOEcommon::SOE;
-use fltk::{app, prelude::*, window::Window,button::Button};
+//mod crate::popup;
 
-
-
-#[derive(Debug,Clone)]
-enum Message{
+#[derive(Debug, Clone)]
+enum Message {
     None,
     Launch,
+    Mess(String),
 }
-pub fn lui(game: SOE){
+pub fn lui(game: SOE) {
     let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "SOElauncher");
     let mut but = Button::new(160, 210, 100, 40, "Launch game");
 
+    let mut grid = group::VGrid::new(0, 0, 400, 20, "grid");
+    grid.set_params(1, 3, 0);
+    let mut updatebut = Button::new(0, 0, 80, 20, "Update game");
+    let mut repobut = Button::new(160, 0, 80, 20, "Github repo");
+
+    grid.end();
     wind.end();
     wind.show();
     let (s, r) = app::channel::<Message>();
-    but.emit(s, Message::Launch);
-    if !game.has_game(){
+    but.emit(s.clone(), Message::Launch);
+    repobut.emit(s, Message::Mess("repo".to_string()));
+    popup::pop("test");
+
+    if !game.has_game() {
         but.deactivate()
-    }else{
+    } else {
         but.activate();
     }
-    println!("{}",game.has_game());
+    if !game.has_file("updater") {
+        updatebut.deactivate()
+    } else {
+        updatebut.activate();
+    }
+    println!("{}", game.has_game());
 
-
-    while app.wait(){
-        
+    while app.wait() {
         if let Some(msg) = r.recv() {
             match msg {
                 Message::Launch => {
                     game.launch_game();
+                }
+                Message::Mess(a) => match a.as_str() {
+                    "repo" => {
+                        webbrowser::open("https://github.com/symphony-of-empires/").is_ok();
+                    }
+
+                    _ => {}
                 },
-                _=>{
+                _ => {
                     panic!("How did I get here?!")
                 }
-                
             }
         }
     }
