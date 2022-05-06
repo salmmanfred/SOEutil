@@ -1,22 +1,19 @@
-use std::env;
-mod ui;
-const VERSION: &str = "0.1";
-//mod popup;
-use SOEcommon::verify;
+#![cfg_attr(
+  all(not(debug_assertions), target_os = "windows"),
+  windows_subsystem = "windows"
+)]
+
+#[tauri::command]
+fn test() {
+  println!("I was invoked from JS!");
+}
+
+
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    for x in args {
-        match x {
-            "-v" => {
-                println!("{VERSION}");
-                return ();
-            }
-            
-            _=>{
-
-            }
-        }
-    }
-    ui::lui(verify());
+  tauri::Builder::default().invoke_handler(tauri::generate_handler![test])
+    .run(tauri::generate_context!(
+      "tauri.conf.json"
+    ))
+    .expect("error while running tauri application");
 }

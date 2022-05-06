@@ -5,6 +5,9 @@ version = 3
 [[package]]
 name = "SOEcommon"
 version = "0.1.0"
+dependencies = [
+ "attohttpc",
+]
 
 [[package]]
 name = "SOEupdater"
