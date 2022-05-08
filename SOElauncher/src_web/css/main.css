@@ -1,0 +1,41 @@
+.play_button{
+    width: 100%;
+    height: 5em;
+
+}
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+.center {
+   /* position: absolute;*/
+    text-align: center;
+}
+.column {
+    float: left;
+    width: 33%;
+
+}
+.left, .right {
+    width: 25%;
+}
+  
+.middle {
+    width: 50%;
+}
+  /* Clear floats after the columns */
+.row{
+    
+ 
+    bottom: 0px;
+}
+footer {
+    margin-top: auto;
+    
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

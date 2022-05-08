@@ -3,6 +3,8 @@
   windows_subsystem = "windows"
 )]
 
+mod popup;
+
 #[tauri::command]
 fn test() {
   println!("I was invoked from JS!");
@@ -11,7 +13,7 @@ fn test() {
 
 
 fn main() {
-  tauri::Builder::default().invoke_handler(tauri::generate_handler![test])
+  tauri::Builder::default().invoke_handler(tauri::generate_handler![test,popup::popup])
     .run(tauri::generate_context!(
       "tauri.conf.json"
     ))
