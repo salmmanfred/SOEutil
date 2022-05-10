@@ -43,7 +43,7 @@ var responseContainer = document.getElementById('response')
         invoke("test")
     }
     function popup(){
-      invoke("popup", { id: `child-${windowId}-${windowNumber}` }).then((response) => {
+      invoke("popup", { id: `child-${windowId}-${windowNumber}`,typ:1 }).then((response) => {
           responseContainer.innerText += `Ok(${response})\n\n`
         })
         .catch((error) => {

@@ -65,6 +65,7 @@ name = "app"
 version = "0.1.0"
 dependencies = [
  "SOEcommon",
+ "lazy_static",
  "serde",
  "serde_json",
  "tauri",
