@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link rel="stylesheet" href="./css/main.css">
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SOE LAUNCHER</title>
-  </head>
-  <body>
+<div class="full center b-gt">
+  <div class="card">
     <h1 class="center">Welcome to POPUP!</h1>
-    <div id="bod"></div>
-    
-  </body>
-  <script>
-        var bod = document.getElementById('bod')
-
-       invoke("get_cont").then((response) => {
-          bod.innerText += `Ok(${response})\n\n`
-        })
-        .catch((error) => {
-          bod.innerText += `Err(${error})\n\n`
-        });
-  </script>
-</html>
+    <button onclick="test()" class="play_button">Test2.5</button>
+    <button onclick="popup()" class="play_button">Test3</button>
+  </div>
+</div>

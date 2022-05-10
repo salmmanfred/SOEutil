@@ -1,57 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="./css/main.css">
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SOE LAUNCHER</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOE LAUNCHER</title>
+
+  <link rel="stylesheet" href="./css/main.css">
+  <script src="./js/index.js" defer></script>
+
+  <link rel="stylesheet" href="./css/popup.css">
+  <script src="./js/popup.js" defer></script>
+</head>
+
+<body>
+  <main>
     <h1 class="center">Welcome to SOE!</h1>
     <div id="response"></div>
-    
-  </body>
+    <div id="portal"></div>
+  </main>
   <footer>
-
     <div class="row">
-      <div class="column left">
-          <button onclick="test()" class="play_button">Test</button>
-
-      </div>
-      <div class="column middle">
-          <button onclick="test()" class="play_button">Test2.5</button>
-
-      </div>
-      <div class="column right">
-          <button onclick="popup()" class="play_button">Test3</button>
-
-      </div>
-    </div> 
-
+      <button onclick="test()" class="play_button">Test</button>
+      <button onclick="test()" class="play_button grow2">Test2.5</button>
+      <button onclick="popup()" class="play_button">Test3</button>
+    </div>
   </footer>
+</body>
 
 </html>
-<script>
-
-var responseContainer = document.getElementById('response')
-
-    const invoke = window.__TAURI__.invoke
-    var windowId = Math.random().toString().replace('.', '')
-    var windowNumber = 1
-    function test(){
-        invoke("test")
-    }
-    function popup(){
-      invoke("popup", { id: `child-${windowId}-${windowNumber}`,typ:1 }).then((response) => {
-          responseContainer.innerText += `Ok(${response})\n\n`
-        })
-        .catch((error) => {
-          responseContainer.innerText += `Err(${error})\n\n`
-        });
-      windowNumber += 1;
-    }
-    window.__TAURI__.event.listen('tauri://window-created', function (event) {
-      responseContainer.innerText += 'Got window-created event\n\n'
-    })
-</script>
