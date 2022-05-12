@@ -17,7 +17,7 @@ fn test() {
 
 
 fn main() {
-  tauri::Builder::default().invoke_handler(tauri::generate_handler![test,popup::popup,popup::get_cont])
+  tauri::Builder::default().invoke_handler(tauri::generate_handler![test,popup::open_web_git,])
     .run(tauri::generate_context!(
       "tauri.conf.json"
     ))

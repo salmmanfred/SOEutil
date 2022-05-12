@@ -13,38 +13,20 @@ const load = (component) => {
     return fetch(component + '.html')
         .then(response => response.text());
 
-    // ! If we ever want to add lazy loading for css & js
-    // const head = document.getElementsByTagName("head")[0];
-    // if (!document.getElementById(component + "-css")) {
-    //     const cssLink = document.createElement("link");
-
-    //     cssLink.href = "css/" + component + ".css";
-    //     cssLink.id = component + "-css";
-    //     cssLink.type = "text/css";
-    //     cssLink.rel = "stylesheet";
-
-    //     head.appendChild(cssLink);
-    // }
-    // if (!document.getElementById(component + "-js")) {
-    //     const jsLink = document.createElement("script");
-
-    //     jsLink.src = "js/" + component + ".js";
-    //     jsLink.id = component + "-js";
-    //     jsLink.defer = true;
-
-    //     head.appendChild(cssLink);
-    // }
+    
 }
-function popup() {
-    load("popup").then(text => idSetInner("portal", text));
-    // invoke("popup", { id: `child-${windowId}-${windowNumber}`,typ:1 }).then((response) => {
-    //     responseContainer.innerText += `Ok(${response})\n\n`
-    // })
-    // .catch((error) => {
-    //     responseContainer.innerText += `Err(${error})\n\n`
-    // });
-    // windowNumber += 1;
+function popup(str) {
+    console.log("startpop");
+    load(str).then(text => idSetInner("portal", text));
+    console.log("end pop");
+    
 }
+
+function open_web(){
+    invoke("open_web_git");
+}
+
+
 window.__TAURI__.event.listen('tauri://window-created', function (event) {
     responseContainer.innerText += 'Got window-created event\n\n'
 })
