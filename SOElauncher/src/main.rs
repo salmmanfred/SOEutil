@@ -4,12 +4,15 @@
 )]
 
 mod popup;
+mod game;
+use tauri::command;
+
 
 #[macro_use]
 extern crate lazy_static;
 
 
-#[tauri::command]
+#[command]
 fn test() {
   println!("I was invoked from JS!");
 }
@@ -17,7 +20,9 @@ fn test() {
 
 
 fn main() {
-  tauri::Builder::default().invoke_handler(tauri::generate_handler![test,popup::open_web_git,])
+  tauri::Builder::default().invoke_handler(tauri::generate_handler![test,
+    popup::open_web_git,
+    game::start])
     .run(tauri::generate_context!(
       "tauri.conf.json"
     ))

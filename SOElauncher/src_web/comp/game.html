@@ -1,0 +1,12 @@
+<div class="full center b-gt">
+    <div class="card">
+      <h1  class="center">Starting game</h1>
+      <body onload='start_game()' ></body>
+      <script>
+          console.log("run");
+          const invoke = window.__TAURI__.invoke;
+            invoke("start")
+      </script>
+
+    </div>
+</div>

@@ -26,6 +26,11 @@ function open_web(){
     invoke("open_web_git");
 }
 
+function start_web(){
+    invoke("start");
+
+}
+
 
 window.__TAURI__.event.listen('tauri://window-created', function (event) {
     responseContainer.innerText += 'Got window-created event\n\n'
