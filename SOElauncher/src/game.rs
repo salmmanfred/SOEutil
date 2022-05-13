@@ -2,22 +2,21 @@ use SOEcommon::verify;
 
 use tauri::command;
 
-#[command]
-pub fn start()->bool{
+pub fn start() -> bool {
     println!("starting ran");
     let soe = verify();
 
-    match soe.has_game(){
-        true =>{
+    match soe.has_game() {
+        true => {
             soe.launch_game();
             println!("found game");
 
-            return true
+            return true;
         }
-        false =>{
+        false => {
             println!("no game");
 
-            return false
+            return false;
         }
     }
 }

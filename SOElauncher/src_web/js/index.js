@@ -18,6 +18,7 @@ const load = (component) => {
 function popup(str) {
     console.log("startpop");
     load(str).then(text => idSetInner("portal", text));
+    invoke("report_backend", { data: str});
     console.log("end pop");
     
 }
