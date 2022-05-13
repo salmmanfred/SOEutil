@@ -26,7 +26,7 @@ function open_web(){
     invoke("open_web_git");
 }
 
-function start_web(){
+function start_game(){
     invoke("start");
 
 }
