@@ -8,7 +8,17 @@ pub fn start() -> bool {
 
     match soe.has_game() {
         true => {
-            soe.launch_game();
+            match soe.launch_game(){
+                "ok" =>{
+                    println!("started game");
+                }
+                "NotSupport" =>{
+                    println!("Could not start game wrong OS");
+                }
+                _=>{
+                    panic!("what");
+                }
+            }
             println!("found game");
 
             return true;

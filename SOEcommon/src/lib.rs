@@ -25,16 +25,17 @@ impl SOE{
             }
         }
     }
-    pub fn launch_game(&self){
+    pub fn launch_game(&self)->&str{
         #[cfg(target_os = "windows")]
         {
             let foo = Command::new(format!("{}",self.exe_path.form()))
                         .output().unwrap();
-            return ()
+            return "ok"
         }
         #[cfg(not(target_os = "windows"))]
         {
-            println!("Operating system not supported")
+            println!("Operating system not supported");
+            return "NotSupport" 
         }
         
     }

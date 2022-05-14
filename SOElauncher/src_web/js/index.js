@@ -15,10 +15,11 @@ const load = (component) => {
 
     
 }
-function popup(str) {
+function popup(strs) {
     console.log("startpop");
+    str = invoke("report_backend", { data: strs});
+    console.log(str);
     load(str).then(text => idSetInner("portal", text));
-    invoke("report_backend", { data: str});
     console.log("end pop");
     
 }

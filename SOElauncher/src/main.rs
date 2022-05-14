@@ -16,13 +16,23 @@ fn test() {
 }
 
 #[command]
-fn report_backend(data: String) {
+fn report_backend(data: String) -> String {
     match data.as_str() {
         "comp/game" => {
-            game::start();
+            
+            match game::start(){
+                true => {
+                    return "comp/game".to_string()
+                }
+                false =>{
+                    return "comp/game_fail".to_string()
+                }
+            }
         }
+        "comp/open_git" => return "comp/open_git".to_string(),
         a => {
-            println!("cannot find {a}")
+            panic!("cannot find {a}")
+            
         }
     }
 }
