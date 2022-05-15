@@ -1,6 +1,8 @@
 use SOEcommon::verify;
 
 use tauri::command;
+use SOEcommon::common::SOErr;
+
 
 pub fn start() -> bool {
     println!("starting ran");
@@ -9,10 +11,10 @@ pub fn start() -> bool {
     match soe.has_game() {
         true => {
             match soe.launch_game(){
-                "ok" =>{
+                SOErr::Ok =>{
                     println!("started game");
                 }
-                "NotSupport" =>{
+                SOErr::OSNotSupported =>{
                     println!("Could not start game wrong OS");
                 }
                 _=>{

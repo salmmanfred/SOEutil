@@ -3,6 +3,11 @@ use std::path::Path;
 use std::process::Command;
 pub mod servers;
 
+pub mod common;
+use crate::common::SOErr;
+
+
+
 #[derive(Debug)]
 pub struct SOE {
     exe_path: SoeFile,
@@ -25,17 +30,17 @@ impl SOE{
             }
         }
     }
-    pub fn launch_game(&self)->&str{
+    pub fn launch_game(&self)->SOErr{
         #[cfg(target_os = "windows")]
         {
             let foo = Command::new(format!("{}",self.exe_path.form()))
                         .output().unwrap();
-            return "ok"
+            return SOErr::Ok;
         }
         #[cfg(not(target_os = "windows"))]
         {
             println!("Operating system not supported");
-            return "NotSupport" 
+            return SOErr::OSNotSupported
         }
         
     }

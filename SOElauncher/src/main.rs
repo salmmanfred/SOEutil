@@ -8,6 +8,10 @@ mod popup;
 use tauri::command;
 
 #[macro_use]
+extern crate handy_macros;
+
+
+#[macro_use]
 extern crate lazy_static;
 
 #[command]
@@ -18,21 +22,13 @@ fn test() {
 #[command]
 fn report_backend(data: String) -> String {
     match data.as_str() {
-        "comp/game" => {
-            
-            match game::start(){
-                true => {
-                    return "comp/game".to_string()
-                }
-                false =>{
-                    return "comp/game_fail".to_string()
-                }
-            }
-        }
-        "comp/open_git" => return "comp/open_git".to_string(),
+        "comp/game" => match game::start() {
+            true => return s!("comp/game"),
+            false => return s!("comp/game_fail"),
+        },
+        "comp/open_git" => return s!("comp/open_git"),
         a => {
             panic!("cannot find {a}")
-            
         }
     }
 }

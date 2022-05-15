@@ -15,11 +15,25 @@ const load = (component) => {
 
     
 }
+function call_back(strs){
+    
+   
+    
+}
+
 function popup(strs) {
     console.log("startpop");
-    str = invoke("report_backend", { data: strs});
-    console.log(str);
-    load(str).then(text => idSetInner("portal", text));
+    invoke("report_backend", { data: strs}).then((response) => {
+          str = response
+          console.log("ok" + response)
+          load(str).then(text => idSetInner("portal", text));
+        
+    }).catch((error) => {
+          console.log("err" + error);
+          
+    });
+    
+    
     console.log("end pop");
     
 }

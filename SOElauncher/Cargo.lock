@@ -65,6 +65,7 @@ name = "app"
 version = "0.1.0"
 dependencies = [
  "SOEcommon",
+ "handy_macros",
  "lazy_static",
  "serde",
  "serde_json",
@@ -1320,6 +1321,12 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "handy_macros"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4769e48b26efaff8db29daf70b5d6ec667b30eca854926f0a1a04cf1443cfc68"
 
 [[package]]
 name = "heck"
