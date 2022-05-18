@@ -61,7 +61,7 @@ impl Man {
     pub fn unzip(&self, game: SOEcommon::SOE) {
         let mut path = "./soe".to_string();
         if game.has_game() {
-            path = game.exe_path.form();
+            path = game.folder.form();
         }
 
         unzip(&path, EXEPATH);

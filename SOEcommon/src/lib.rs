@@ -10,6 +10,7 @@ use crate::common::SOErr;
 pub struct SOE {
     pub exe_path: SoeFile,
     updater: SoeFile,
+    folder: SoeFile,
 }
 impl SOE {
     pub fn has_game(&self) -> bool {
@@ -87,6 +88,7 @@ pub fn verify() -> SOE {
     );
 
     SOE {
+        folder: SoeFile::reg(format!("{}", game_folder))
         exe_path: SoeFile::reg(format!("{}/soe.exe", game_folder)),
         updater: SoeFile::reg(format!("./SOEupdater.exe")),
     }

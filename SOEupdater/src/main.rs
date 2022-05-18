@@ -59,7 +59,7 @@ pub fn download(game: SOE) {
     man.download_mods();
     println!("Done");
     println!("Removing previous version..");
-    openfile::remove_file(&format!("{}", game.exe_path.form()));
+    openfile::remove_file(&format!("{}", game.folder.form()));
     //println!("Failed to remove previous version (not added yet)");
     man.unzip(game);
     println!("Cleaning up...");
