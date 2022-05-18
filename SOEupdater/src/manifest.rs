@@ -58,9 +58,14 @@ impl Man {
         });
         l.join().unwrap();
     }
-    pub fn unzip(&self) {
-        unzip("./soe", EXEPATH);
-        unzip("./soe/exe", MODPATH);
+    pub fn unzip(&self, game: SOEcommon::SOE) {
+        let mut path = "./soe".to_string();
+        if game.has_game() {
+            path = game.exe_path.form();
+        }
+
+        unzip(&path, EXEPATH);
+        unzip(&format!("{path}/exe"), MODPATH);
     }
     pub fn cleanup(&self) {
         openfile::remove_file(EXEPATH);
