@@ -77,7 +77,10 @@ pub fn verify() -> SOE {
     let mut how_many_found = 0;
     let mut exepath = "".to_string();
     let mut game_folder = find_game(".", "soe.exe", 5, 0).0;
+    let mut game_folder_a  = find_game(".", "soe.exe", 5, 0).1;
+
     println!("Game folder: {}", game_folder);
+    println!("g {game_folder_a}");
     println!(
         "Game folder exists: {}",
         Path::new(&format!("{}", game_folder)).exists()
