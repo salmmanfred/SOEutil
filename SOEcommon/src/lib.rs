@@ -29,6 +29,7 @@ impl SOE {
         #[cfg(target_os = "windows")]
         {
             let foo = Command::new(format!("{}", self.exe_path.form()))
+                .arg(format!("-- mod {}/mods", self.exe_path.form()))
                 .output()
                 .unwrap();
             return SOErr::Ok;
@@ -77,10 +78,10 @@ pub fn verify() -> SOE {
     let mut how_many_found = 0;
     let mut exepath = "".to_string();
     let mut game_folder = find_game(".", "soe.exe", 5, 0).0;
-    let mut game_folder_a  = find_game(".", "soe.exe", 5, 0);
+    let mut game_folder_a = find_game(".", "soe.exe", 5, 0);
 
     println!("Game folder: {}", game_folder);
-    println!("g {:#?}",game_folder_a);
+    println!("g {:#?}", game_folder_a);
     println!(
         "Game folder exists: {}",
         Path::new(&format!("{}", game_folder)).exists()
@@ -88,6 +89,10 @@ pub fn verify() -> SOE {
     println!(
         "Exe exists: {}",
         Path::new(&format!("{}/soe.exe", game_folder)).exists()
+    );
+    println!(
+        "mod exists: {}",
+        Path::new(&format!("{}/mods", game_folder)).exists()
     );
 
     SOE {
