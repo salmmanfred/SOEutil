@@ -29,7 +29,7 @@ impl SOE {
         #[cfg(target_os = "windows")]
         {
             let foo = Command::new(format!("{}", self.exe_path.form()))
-                .arg(format!("-- mod {}/mods", self.exe_path.form()))
+                .arg(format!("--mod {}/mods", self.exe_path.form()))
                 .output()
                 .unwrap();
             return SOErr::Ok;
@@ -77,8 +77,8 @@ impl SoeFile {
 pub fn verify() -> SOE {
     let mut how_many_found = 0;
     let mut exepath = "".to_string();
-    let mut game_folder = find_game(".", "soe.exe", 5, 0).0;
     let mut game_folder_a = find_game(".", "soe.exe", 5, 0);
+    let mut game_folder = game_folder_a.0.clone();
 
     println!("Game folder: {}", game_folder);
     println!("g {:#?}", game_folder_a);
@@ -88,7 +88,7 @@ pub fn verify() -> SOE {
     );
     println!(
         "Exe exists: {}",
-        Path::new(&format!("{}/soe.exe", game_folder)).exists()
+        Path::new(&format!("{}/SymphonyOfEmpires.exe", game_folder)).exists()
     );
     println!(
         "mod exists: {}",
@@ -97,7 +97,7 @@ pub fn verify() -> SOE {
 
     SOE {
         folder: SoeFile::reg(format!("{}", game_folder)),
-        exe_path: SoeFile::reg(format!("{}/soe.exe", game_folder)),
+        exe_path: SoeFile::reg(format!("{}/SymphonyOfEmpires.exe", game_folder)),
         updater: SoeFile::reg(format!("./SOEupdater.exe")),
     }
 }
