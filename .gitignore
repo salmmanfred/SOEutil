@@ -1,3 +1,5 @@
 *.scrap
 /soe
 /SOEcommon/target
+/SOElauncher/target
+*.exe

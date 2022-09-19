@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SOE LAUNCHER</title>
-  </head>
-  <body>
-    <h1>Welcome to SOE!</h1>
-    <button onclick="test()">Test</button>
-  </body>
-</html>
-<script>
-    const invoke = window.__TAURI__.invoke
 
-    function test(){
-        invoke("test")
-    }
-</script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOE LAUNCHER</title>
+
+  <link rel="stylesheet" href="./css/main.css">
+  <script src="./js/index.js" defer></script>
+
+  <link rel="stylesheet" href="./css/popup.css">
+  <script src="./js/popup.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <h1 class="center">Welcome to SoE!</h1>
+    <div id="response"></div>
+    <div id="portal"></div>
+  </main>
+  <footer>
+    <div class="row">
+      <button onclick="test()" class="play_button">Test</button>
+      <button onclick='popup("comp/game")' class="play_button grow2">Start</button>
+      <button onclick='popup("comp/open_git")' class="play_button">Popup</button>
+    </div>
+  </footer>
+</body>
+
+</html>

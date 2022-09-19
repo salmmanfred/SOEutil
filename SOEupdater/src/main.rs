@@ -1,14 +1,14 @@
 mod manifest;
-use std::env;
-use SOEcommon::{verify,SOE};
-
 use manifest::MANPATH;
+use std::env;
+use std::fs;
 use std::io::{stdin, stdout, Write};
+use SOEcommon::{verify, SOE};
 const VERSION: &str = "0.1";
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    println!("SOE updater by Manfred. Version: {}",VERSION);
+    println!("SOE updater by Manfred. Version: {}", VERSION);
     let soe = verify();
     let mut confirm = true;
     // checks the command line arguments
@@ -59,9 +59,10 @@ pub fn download(game: SOE) {
     man.download_mods();
     println!("Done");
     println!("Removing previous version..");
-    //openfile::remove_file(&format!("{}",game.game_folder()));
-    println!("Failed to remove previous version (not added yet)");
-    man.unzip();
+    //openfile::remove_file();
+    fs::remove_dir(&format!("{}", game.folder.form()));
+    //println!("Failed to remove previous version (not added yet)");
+    man.unzip(game);
     println!("Cleaning up...");
     man.cleanup();
     println!("done");
