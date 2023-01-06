@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
@@ -36,7 +37,7 @@ fn report_backend(data: String) -> String {
 
 #[command]
 fn fetch_modlist()->Vec<String>{
-    println!("l");
+    
     let paths = fs::read_dir("./mods").unwrap();
     let mut mods = Vec::new();
     for path in paths {
