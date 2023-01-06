@@ -4,7 +4,7 @@ const invoke = window.__TAURI__.invoke
 var windowId = Math.random().toString().replace('.', '')
 var windowNumber = 1
 
-
+load_mods()
 function load_mods(){
     invoke("fetch_modlist").then((modlist) =>{
         let htmllist = document.getElementById("modlist")

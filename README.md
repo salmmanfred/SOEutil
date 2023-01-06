@@ -1,7 +1,11 @@
 # SOE utility repository
   
 ## Current projects:
-[ ] SOEupdater - Deprecated  
-[ ] SOElauncher  
+[X] SOElauncher  
+TODO:  
+Rember last used mods  
+better ui 
+Cleaner code  
+Better error handling  
 
 
