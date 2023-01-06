@@ -11,7 +11,7 @@
   <script src="./js/index.js" defer></script>
 
   <link rel="stylesheet" href="./css/popup.css">
-  <script src="./js/popup.js" defer></script>
+  
 </head>
 
 <body>
@@ -20,11 +20,21 @@
     <div id="response"></div>
     <div id="portal"></div>
   </main>
+  <ul onload="load_mods()" id="modlist">
+    <li><div>
+      Test mod
+      <button onclick='load_mods()' >Use mod</button>
+
+    </div></li>
+    
+  </ul>
+
+
   <footer>
     <div class="row">
-      <button onclick="test()" class="play_button">Test</button>
-      <button onclick='popup("comp/game")' class="play_button grow2">Start</button>
-      <button onclick='popup("comp/open_git")' class="play_button">Popup</button>
+      <button onclick='popup("comp/not_imp")' class="play_button">Settings</button>
+      <button onclick='start_game()' class="play_button grow2">Start</button>
+      <button onclick='open_web()' class="play_button">Website</button>
     </div>
   </footer>
 </body>

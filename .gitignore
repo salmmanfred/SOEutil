@@ -3,3 +3,4 @@
 /SOEcommon/target
 /SOElauncher/target
 *.exe
+/game
