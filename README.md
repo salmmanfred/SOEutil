@@ -1,8 +1,7 @@
 # SOE utility repository
   
 ## Current projects:
-[X] SOEupdater  
+[ ] SOEupdater - Deprecated  
 [ ] SOElauncher  
-## Planned projects:
-SOEmodmanager
+
 
