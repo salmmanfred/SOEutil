@@ -1,1 +1,0 @@
-# A library for SOE related utilites  

@@ -3,6 +3,65 @@ var responseContainer = document.getElementById('response')
 const invoke = window.__TAURI__.invoke
 var windowId = Math.random().toString().replace('.', '')
 var windowNumber = 1
+
+
+function load_mods(){
+    invoke("fetch_modlist").then((modlist) =>{
+        let htmllist = document.getElementById("modlist")
+        htmllist.innerHTML = " ";
+        console.log(modlist)
+        console.log(modlist.length)
+
+        for (let i = 0; i <= modlist.length-1; i++){
+            console.log("adding list");
+            let li = document.createElement("li");
+            let intdiv = document.createElement("div");
+            let intdiv2 = document.createElement("div");
+            let id = "buttonmod"+i;
+
+            intdiv2.appendChild(document.createTextNode(modlist[i]))
+            intdiv2.id = id+"sub"
+            intdiv.appendChild(intdiv2)
+            let intbutton = document.createElement("button")
+            intbutton.innerText = "Not on";
+            intbutton.setAttribute("onclick", "mod(\""+id+"\")");
+            intbutton.id = id
+            
+            intdiv.appendChild(intbutton);
+
+            li.appendChild(intdiv);
+            htmllist.appendChild(li);
+        }
+        console.log("done");
+
+
+    });
+    
+}
+var actmods = [];
+function mod(btn){
+    let btnid = document.getElementById(btn);
+    
+    let pth = document.getElementById(btn+"sub").innerText;
+    
+
+    for (let i = 0; i <= actmods.length-1; i++){
+        if (pth == actmods[i]){
+            btnid.innerText = "Not on"
+            actmods.splice(i,1);
+            return;
+        }
+    }
+
+
+    actmods.push(pth);
+    console.log("pt" + pth);
+    console.log(actmods)
+    btnid.innerText = "On"
+
+
+}
+
 function test() {
     invoke("test")
 }
@@ -43,7 +102,7 @@ function open_web(){
 }
 
 function start_game(){
-    invoke("start");
+    invoke("start", {data: actmods});
 
 }
 
