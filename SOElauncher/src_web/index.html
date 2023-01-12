@@ -20,7 +20,7 @@
     <div id="response"></div>
     <div id="portal"></div>
   </main>
-  <button onload="load_mods()"  onclick='load_mods()' >Refresh mods</button>
+  <button   onclick='load_mods()' class="refresh_button" >Refresh mods</button>
   <ul id="modlist">
     
     
@@ -29,9 +29,9 @@
 
   <footer>
     <div class="row">
-      <button onclick='popup("comp/not_imp")' class="play_button">Settings</button>
-      <button onclick='start_game()' class="play_button grow2">Start</button>
-      <button onclick='open_web()' class="play_button">Website</button>
+      <button onclick='popup("comp/not_imp")' class="main_button">Settings</button>
+      <button onclick='start_game()' class="main_button grow2 play">Start</button>
+      <button onclick='open_web()' class="main_button">Website</button>
     </div>
   </footer>
 </body>
