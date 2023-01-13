@@ -1,6 +1,18 @@
 # SOE launcher
 
-## Build on Linux
+## Building
 
-https://tauri.studio/guides/getting-started/setup/linux
-  
+Requirements:
+
+* [Rust](https://www.rust-lang.org/)
+* [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/VC_redist.x64.exe) (Windows only)
+
+### Debug build
+```
+cargo build
+```
+
+### Release Build
+```
+cargo build --release
+```
