@@ -1,8 +1,10 @@
-//#![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"]
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
+
+
 
 
 mod popup;
@@ -13,32 +15,24 @@ use tauri::command;
 #[macro_use]
 extern crate handy_macros;
 
-
-
-extern crate lazy_static;
-
-#[command]
-fn test() {
-    println!("I was invoked from JS!");
-    
-}
-
 #[command]
 fn report_backend(data: String) -> String {
     match data.as_str() {
        
-        "comp/open_git" => return s!("comp/open_git"),
+        "comp/website" => return s!("comp/website"),
         "comp/not_imp" => return s!("comp/not_imp"),
-        a => {
-            panic!("cannot find {a}")
+        "comp/fetcherr" => return s!("comp/fetcherr"),
+
+        _=> {
+            s!("comp/err")
         }
     }
 }
-
+const MODDIR:&'static str = "./mods";
 #[command]
 fn fetch_modlist()->Vec<String>{
     
-    let paths = fs::read_dir("./mods").unwrap();
+    let paths = fs::read_dir(MODDIR).unwrap();
     let mut mods = Vec::new();
     for path in paths {
         let modf = path.unwrap().path();
@@ -46,6 +40,20 @@ fn fetch_modlist()->Vec<String>{
         
     }
     mods
+}
+#[command]
+fn correct_pos()->bool{
+    
+    match fs::read_dir(MODDIR){
+        Ok(_)=>{
+            true
+        }
+        _=>{
+            false
+        }
+    }
+    
+    
 }
 #[command]
 fn start (data: Vec<String>){
@@ -70,8 +78,10 @@ fn start (data: Vec<String>){
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            test,
+           
             popup::open_web_git,
+            popup::open_web,
+            correct_pos,
             report_backend,
             fetch_modlist,
             start,

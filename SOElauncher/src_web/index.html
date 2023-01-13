@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SOE LAUNCHER</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOE LAUNCHER</title>
+        <link rel="stylesheet" href="./css/main.css" />
+        <script src="./js/index.js" defer></script>
 
-  <link rel="stylesheet" href="./css/main.css">
-  <script src="./js/index.js" defer></script>
+        <link rel="stylesheet" href="./css/popup.css" />
+        
+    </head>
 
-  <link rel="stylesheet" href="./css/popup.css">
-  
-</head>
+    <body>
+        <main>
+            <h1 class="center">Symphony of Empires</h1>
+            <div id="response"></div>
+            <div id="portal"></div>
+        </main>
+        <ul id="modlist"></ul>
 
-<body>
-  <main>
-    <h1 class="center">Welcome to SoE!</h1>
-    <div id="response"></div>
-    <div id="portal"></div>
-  </main>
-  <button   onclick='load_mods()' class="refresh_button" >Refresh mods</button>
-  <ul id="modlist">
-    
-    
-  </ul>
-
-
-  <footer>
-    <div class="row">
-      <button onclick='popup("comp/not_imp")' class="main_button">Settings</button>
-      <button onclick='start_game()' class="main_button grow2 play">Start</button>
-      <button onclick='open_web()' class="main_button">Website</button>
-    </div>
-  </footer>
-</body>
-
+        <footer>
+            <div class="row">
+                <button onclick='popup("comp/not_imp")' class="main_button">
+                    Settings
+                </button>
+                <button onclick="start_game()" class="main_button grow2 play">
+                    Start
+                </button>
+                <button onclick='popup("comp/website")' class="main_button">
+                    Website
+                </button>
+            </div>
+        </footer>
+    </body>
 </html>

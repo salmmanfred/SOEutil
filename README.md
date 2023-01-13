@@ -3,7 +3,7 @@
 ## Current projects:
 [X] SOElauncher  
 TODO:  
-Rember last used mods  
+remember last used mods  
 better ui 
 Cleaner code  
 Better error handling  
