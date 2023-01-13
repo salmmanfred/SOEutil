@@ -79,6 +79,9 @@ function call_back(strs){
    
     
 }
+function close_popup(){
+    document.getElementById("portal").innerHTML = ""
+}
 
 function popup(strs) {
     console.log("startpop");
