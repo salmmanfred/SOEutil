@@ -1,6 +1,18 @@
 # SOE launcher
 
-## Build on Linux
+## Building
 
-https://tauri.studio/guides/getting-started/setup/linux
-  
+Requirements:
+
+* [Rust](https://www.rust-lang.org/)
+* [MSCV](https://visualstudio.microsoft.com/) (Windows only)
+
+### Debug build
+```
+cargo build
+```
+
+### Release Build
+```
+cargo build --release
+```
