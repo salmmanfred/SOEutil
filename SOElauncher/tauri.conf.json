@@ -14,7 +14,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.symphony-of-empires",
       "icon": [
         "icons/32x32.png",
         "icons/192x192.png",
@@ -25,7 +25,7 @@
       "resources": [],
       "externalBin": [],
       "copyright": "GPL-2.0",
-      "category": "DeveloperTool",
+      "category": "Game",
       "shortDescription": "",
       "longDescription": "",
       "deb": {
