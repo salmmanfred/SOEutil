@@ -8,4 +8,3 @@ pub fn open_web() {
 pub fn open_web_git() {
     webbrowser::open("https://github.com/symphony-of-empires/").unwrap();
 }
-
