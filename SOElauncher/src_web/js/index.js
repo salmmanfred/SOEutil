@@ -22,41 +22,28 @@ function load_mods() {
         htmllist.innerHTML = " ";
         console.log(modlist);
         console.log(modlist.length);
-        console.log(settings)
 
-        for (let i = 0; i <= modlist.length - 1; i++) {
+        for (let i = 0; i < modlist.length; i++) {
             console.log("adding list");
+            const isModLoaded = settings.previous_mods.includes(modlist[i])
             const li = document.createElement("li");
+            li.innerHTML =
+                    `
+                    <li>
+                        <div class="modrow">
+                            <p id="buttonmod${i}sub" class="modname"> ${modlist[i]} </p>
+                            <button 
+                                id="buttonmod${i}" 
+                                class="mod_button ${isModLoaded?"green":"red"}" 
+                                onclick="mod('buttonmod${i}')"
+                            >
+                                ${isModLoaded?"On":"Off"}
+                            </button>
+                        </div>
+                    </li>
+                    `;
 
-            const modRow = document.createElement("div")
-            modRow.classList.add("modrow")
-
-            const p = document.createElement("p")
-            p.setAttribute("id", `buttonmod${i}sub`)
-            p.innerText = modlist[i]
-            p.classList.add("modname")
-
-            const button = document.createElement("button")
-            button.classList.add("mod_button")
-            button.setAttribute("id", `buttonmod${i}`)
-            button.onclick = ()=> {
-                mod(button.getAttribute("id"))
-            }
-
-            if(settings.previous_mods.includes(modlist[i])) {
-                button.innerText = "On"
-                button.classList.add("green")
-            } else {
-                button.innerText = "Not on"
-                button.classList.add("red")
-            }
-
-            modRow.appendChild(p)
-            modRow.appendChild(button)
-
-            li.appendChild(modRow)
             htmllist.appendChild(li);
-
         }
         console.log("done");
     });
@@ -67,7 +54,7 @@ function mod(btn) {
 
     let pth = document.getElementById(btn + "sub").innerText;
 
-    for (let i = 0; i <= settings.previous_mods.length - 1; i++) {
+    for (let i = 0; i < settings.previous_mods.length; i++) {
         if (pth == settings.previous_mods[i]) {
             btnid.innerText = "Not on";
             btnid.classList.replace("green", "red");
