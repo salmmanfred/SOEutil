@@ -2,7 +2,7 @@ const invoke = window.__TAURI__.invoke;
 
 var responseContainer = document.getElementById("response");
 var settings = {
-    previous_mods: []
+    active_mods: []
 }
 
 invoke("get_launcher_settings").then(data => settings = data)
@@ -10,6 +10,7 @@ invoke("get_launcher_settings").then(data => settings = data)
 invoke("correct_pos").then((cor) =>{
     if (cor){
         setInterval(load_mods, 5000)
+        load_mods()
     }
     else{
         popup("comp/fetcherr")
@@ -25,7 +26,7 @@ function load_mods() {
 
         for (let i = 0; i < modlist.length; i++) {
             console.log("adding list");
-            const isModLoaded = settings.previous_mods.includes(modlist[i])
+            const isModLoaded = settings.active_mods.includes(modlist[i])
             const li = document.createElement("li");
             li.innerHTML =
                     `
@@ -41,6 +42,7 @@ function load_mods() {
                             </button>
                         </div>
                     </li>
+
                     `;
 
             htmllist.appendChild(li);
@@ -54,26 +56,28 @@ function mod(btn) {
 
     let pth = document.getElementById(btn + "sub").innerText;
 
-    for (let i = 0; i < settings.previous_mods.length; i++) {
-        if (pth == settings.previous_mods[i]) {
+    for (let i = 0; i < settings.active_mods.length; i++) {
+        if (pth == settings.active_mods[i]) {
             btnid.innerText = "Not on";
             btnid.classList.replace("green", "red");
-            settings.previous_mods.splice(i, 1);
+            settings.active_mods.splice(i, 1);
+    invoke("save_launcher_settings", {settings: settings});
+            
 
             return;
         }
     }
 
-    settings.previous_mods.push(pth);
+    settings.active_mods.push(pth);
     console.log("pt" + pth);
-    console.log(settings.previous_mods);
+    console.log(settings.active_mods);
     btnid.classList.replace("red", "green");
     btnid.innerText = "On";
+    invoke("save_launcher_settings", {settings: settings});
+
 }
 
-function test() {
-    invoke("test");
-}
+
 function idSetInner(id, text) {
     document.getElementById(id).innerHTML = text;
 };
@@ -108,7 +112,8 @@ function open_git() {
 }
 
 function start_game() {
-    invoke("start", { data: settings.previous_mods });
+
+    invoke("start", { data: settings.active_mods });
 }
 
 window.__TAURI__.event.listen("tauri://window-created", function (event) {

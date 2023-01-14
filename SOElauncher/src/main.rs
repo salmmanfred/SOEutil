@@ -5,7 +5,7 @@
 )]
 
 mod popup;
-use std::{fs, process::Command, thread};
+use std::{fs, process::Command, thread, fmt::write};
 use tauri::command;
 
 #[macro_use]
@@ -65,16 +65,16 @@ use std::path::Path;
 fn save_launcher_settings(settings: LauncherSettings) {
     let json = serde_json::to_string(&settings);
     if let Ok(json) = json {
-        fs::write("launcher_settings.json", json).unwrap();
+        fs::write("./launcher_settings.json", json).unwrap();
     }
 }
 
 #[command]
 fn get_launcher_settings() -> LauncherSettings {
-    if !Path::new("launcher_settings.json").exists() {
+    if !Path::new("./launcher_settings.json").exists() {
         return LauncherSettings::new();
     }
-    let data = fs::read_to_string("launcher_settings.json");
+    let data = fs::read_to_string("./launcher_settings.json");
     if let Ok(data) = data {
         return serde_json::from_str(&data.as_str()).unwrap();
     }
@@ -83,6 +83,7 @@ fn get_launcher_settings() -> LauncherSettings {
 }
 
 fn main() {
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             popup::open_web_git,
