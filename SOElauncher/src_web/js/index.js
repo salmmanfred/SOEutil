@@ -6,7 +6,7 @@ var windowNumber = 1;
 
 invoke("correct_pos").then((cor) =>{
     if (cor){
-        setInterval(load_mods(), 5000)
+        setInterval(load_mods, 5000)
     }
     else{
         popup("comp/fetcherr")
