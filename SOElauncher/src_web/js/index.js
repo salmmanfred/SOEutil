@@ -1,12 +1,10 @@
 var responseContainer = document.getElementById("response");
 
 const invoke = window.__TAURI__.invoke;
-var windowId = Math.random().toString().replace(".", "");
-var windowNumber = 1;
 
 invoke("correct_pos").then((cor) =>{
     if (cor){
-        setInterval(load_mods(), 5000)
+        setInterval(load_mods, 5000)
     }
     else{
         popup("comp/fetcherr")
