@@ -56,7 +56,7 @@
     overflow: hidden;
     background-color: lightgray;
 }
-.modrow a{
+.modrow .modname{
     float:left;
 }
 .mod_button{

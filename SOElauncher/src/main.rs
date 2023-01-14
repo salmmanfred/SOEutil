@@ -6,7 +6,6 @@
 
 mod popup;
 use std::{fs, process::Command, thread};
-
 use tauri::command;
 
 #[macro_use]
@@ -58,6 +57,31 @@ fn start(data: Vec<String>) {
     });
 }
 
+mod launcher_settings;
+use launcher_settings::LauncherSettings;
+use std::path::Path;
+
+#[command]
+fn save_launcher_settings(settings: LauncherSettings) {
+    let json = serde_json::to_string(&settings);
+    if let Ok(json) = json {
+        fs::write("launcher_settings.json", json).unwrap();
+    }
+}
+
+#[command]
+fn get_launcher_settings() -> LauncherSettings {
+    if !Path::new("launcher_settings.json").exists() {
+        return LauncherSettings::new();
+    }
+    let data = fs::read_to_string("launcher_settings.json");
+    if let Ok(data) = data {
+        return serde_json::from_str(&data.as_str()).unwrap();
+    }
+
+    LauncherSettings::new()
+}
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -67,6 +91,8 @@ fn main() {
             report_backend,
             fetch_modlist,
             start,
+            save_launcher_settings,
+            get_launcher_settings,
         ])
         .run(tauri::generate_context!("tauri.conf.json"))
         .expect("error while running tauri application");

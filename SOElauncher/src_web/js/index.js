@@ -1,6 +1,11 @@
-var responseContainer = document.getElementById("response");
-
 const invoke = window.__TAURI__.invoke;
+
+var responseContainer = document.getElementById("response");
+var settings = {
+    previous_mods: []
+}
+
+invoke("get_launcher_settings").then(data => settings = data)
 
 invoke("correct_pos").then((cor) =>{
     if (cor){
@@ -18,49 +23,51 @@ function load_mods() {
         console.log(modlist);
         console.log(modlist.length);
 
-        for (let i = 0; i <= modlist.length - 1; i++) {
+        for (let i = 0; i < modlist.length; i++) {
             console.log("adding list");
-            let li = document.createElement("li");
-            let id = "buttonmod" + i;
-            //<hr class="solid">
-            let code = 
-            `<div class="modrow">
-                <a id="`+id+"sub"+`">`+modlist[i]+` </a>
-                
-                <button class="mod_button red" id="`+id+`" onclick='mod("`+id+`")'> Not on</button>
-                
-            </div>
-            
-            
-            `
+            const isModLoaded = settings.previous_mods.includes(modlist[i])
+            const li = document.createElement("li");
+            li.innerHTML =
+                    `
+                    <li>
+                        <div class="modrow">
+                            <p id="buttonmod${i}sub" class="modname"> ${modlist[i]} </p>
+                            <button 
+                                id="buttonmod${i}" 
+                                class="mod_button ${isModLoaded?"green":"red"}" 
+                                onclick="mod('buttonmod${i}')"
+                            >
+                                ${isModLoaded?"On":"Off"}
+                            </button>
+                        </div>
+                    </li>
+                    `;
 
-            li.innerHTML = code;
             htmllist.appendChild(li);
-
         }
         console.log("done");
     });
 }
-var actmods = [];
+
 function mod(btn) {
     let btnid = document.getElementById(btn);
 
     let pth = document.getElementById(btn + "sub").innerText;
 
-    for (let i = 0; i <= actmods.length - 1; i++) {
-        if (pth == actmods[i]) {
+    for (let i = 0; i < settings.previous_mods.length; i++) {
+        if (pth == settings.previous_mods[i]) {
             btnid.innerText = "Not on";
-            btnid.className= "mod_button red";
-            actmods.splice(i, 1);
+            btnid.classList.replace("green", "red");
+            settings.previous_mods.splice(i, 1);
 
             return;
         }
     }
 
-    actmods.push(pth);
+    settings.previous_mods.push(pth);
     console.log("pt" + pth);
-    console.log(actmods);
-    btnid.className= "mod_button green";
+    console.log(settings.previous_mods);
+    btnid.classList.replace("red", "green");
     btnid.innerText = "On";
 }
 
@@ -101,7 +108,7 @@ function open_git() {
 }
 
 function start_game() {
-    invoke("start", { data: actmods });
+    invoke("start", { data: settings.previous_mods });
 }
 
 window.__TAURI__.event.listen("tauri://window-created", function (event) {
