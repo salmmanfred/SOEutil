@@ -5,7 +5,7 @@
 )]
 
 mod popup;
-use std::{fs, process::Command, thread, fmt::write};
+use std::{fs, process::Command, thread};
 use tauri::command;
 
 #[macro_use]
