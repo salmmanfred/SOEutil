@@ -76,7 +76,6 @@ fn get_launcher_settings() -> LauncherSettings {
             if let Ok(settings) = serde_json::from_str(&data.as_str()) {
                 return settings;
             }
-            return LauncherSettings::new();
         }
     }
 
