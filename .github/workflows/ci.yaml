@@ -46,5 +46,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release-${{ matrix.os }}
+          if: matrix.os == 'ubuntu-latest'
           path: |
-            SOElauncher/target/release/SOElauncher.*
+            SOElauncher/target/release/SOElauncher
+          else:
+            SOElauncher/target/release/SOElauncher.exe
