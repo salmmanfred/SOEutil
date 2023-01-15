@@ -52,7 +52,7 @@ function toggle_mod(buttonId) {
     const button = document.getElementById(buttonId)
     const mod_name = document.getElementById(buttonId + "sub").innerText
 
-    const index = settings.active_mods.findIndex(mod_name)
+    const index = settings.active_mods.indexOf(mod_name)
 
     if (index == -1) {
         button.classList.replace("red", "green")
