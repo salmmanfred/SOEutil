@@ -9,5 +9,4 @@ impl LauncherSettings {
     pub fn new() -> LauncherSettings {
         LauncherSettings { active_mods: Vec::new() }
     }
-   
 }

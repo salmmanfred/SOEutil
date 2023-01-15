@@ -83,7 +83,6 @@ fn get_launcher_settings() -> LauncherSettings {
 }
 
 fn main() {
-
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             popup::open_web_git,
