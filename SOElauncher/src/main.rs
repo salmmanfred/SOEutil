@@ -4,7 +4,7 @@
 )]
 
 mod popup;
-use std::{fs, process::Command, thread};
+use std::{fs, process::Command, thread, path::Path};
 use tauri::command;
 
 #[macro_use]
@@ -35,10 +35,7 @@ fn fetch_modlist() -> Vec<String> {
 }
 #[command]
 fn correct_pos() -> bool {
-    match fs::read_dir(MODDIR) {
-        Ok(_) => true,
-        _ => false,
-    }
+    Path::new(MODDIR).exists()
 }
 #[command]
 fn start(data: Vec<String>) {
@@ -58,7 +55,7 @@ fn start(data: Vec<String>) {
 
 mod launcher_settings;
 use launcher_settings::LauncherSettings;
-use std::path::Path;
+
 
 #[command]
 fn save_launcher_settings(settings: LauncherSettings) {
