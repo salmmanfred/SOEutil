@@ -1,4 +1,3 @@
-#![windows_subsystem = "windows"]
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
@@ -71,12 +70,13 @@ fn save_launcher_settings(settings: LauncherSettings) {
 
 #[command]
 fn get_launcher_settings() -> LauncherSettings {
-    if !Path::new("./launcher_settings.json").exists() {
-        return LauncherSettings::new();
-    }
-    let data = fs::read_to_string("./launcher_settings.json");
-    if let Ok(data) = data {
-        return serde_json::from_str(&data.as_str()).unwrap();
+    if Path::new("./launcher_settings.json").exists() {
+        let data = fs::read_to_string("./launcher_settings.json");
+        if let Ok(data) = data {
+            if let Ok(settings) = serde_json::from_str(&data.as_str()) {
+                return settings;
+            }
+        }
     }
 
     LauncherSettings::new()
