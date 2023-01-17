@@ -1,11 +1,12 @@
 # SOE utility repository
   
-## Current projects:
+## Current projects
+
 [X] SOElauncher  
-TODO:  
-remember last used mods  
-better ui 
-Cleaner code  
-Better error handling  
 
+### TODO
 
+* Remember last used mods  
+* Better UI
+* Cleaner code  
+* Better error handling  
