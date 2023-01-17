@@ -59,7 +59,7 @@ function toggle_mod(buttonId) {
         button.innerText = "On"
         settings.active_mods.push(mod_name)
     } else {
-        button.innerText = "Not on"
+        button.innerText = "Off"
         button.classList.replace("green", "red")
         settings.active_mods.splice(index, 1)
     }
@@ -83,7 +83,7 @@ function popup(strs) {
         .then((response) => {
             str = response
             console.log("ok" + response)
-            load(str).then((text) => (document.getElementById("portal").innerText = text))
+            load(str).then((text) => (document.getElementById("portal").innerHTML = text))
         })
         .catch((error) => {
             console.log("err" + error)
