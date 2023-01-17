@@ -89,7 +89,7 @@ function popup(strs) {
             console.log("err" + error)
         })
 }
-;+function open_web() {
+function open_web() {
     invoke("open_web")
 }
 function open_git() {
