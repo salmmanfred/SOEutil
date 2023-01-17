@@ -1,0 +1,31 @@
+name: Build download manager
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    steps:
+      - { name: "Checkout the code", uses: actions/checkout@v2 }
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Build launcher
+        working-directory: ./SOEdownload_manager
+        run: |
+          mkdir bin
+          deno build --target x86_64-unknown-linux-gnu --output ./bin/download_manager mod.ts
+          deno build --target x86_64-pc-windows-msvc --output ./bin/download_manager.exe mod.ts
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-${{ matrix.os }}
+          path: |
+            SOEdownload_manager/bin
