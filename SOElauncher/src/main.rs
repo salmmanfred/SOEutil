@@ -16,6 +16,8 @@ fn report_backend(data: String) -> String {
         "comp/website" => return s!("comp/website"),
         "comp/not_imp" => return s!("comp/not_imp"),
         "comp/fetcherr" => return s!("comp/fetcherr"),
+        "comp/settings" => return s!("comp/settings"),
+
 
         _ => {
             s!("comp/err")
