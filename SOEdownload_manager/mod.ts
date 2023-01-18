@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.173.0/flags/mod.ts"
-import { downloadReleases } from "./updater/releases_downloader.ts"
+import { downloadLatestRelease } from "./updater/releases_downloader.ts"
 
 const flags = parse(Deno.args, {
     boolean: [
@@ -33,5 +33,5 @@ if (flags.update_game) {
     const url = !flags.test
         ? new URL(flags.game_releases_url)
         : new URL(flags.test_game_releases_url)
-    downloadReleases(url, flags.download_dir,"game")
+    downloadLatestRelease(url, flags.download_dir, "game.zip")
 }
