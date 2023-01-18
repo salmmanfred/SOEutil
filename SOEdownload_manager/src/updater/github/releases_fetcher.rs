@@ -1,0 +1,24 @@
+use super::release::Releases;
+use reqwest::header::USER_AGENT;
+use reqwest::Client;
+
+pub async fn fetch_release(url: String) -> Result<Releases, Box<dyn std::error::Error>> {
+    let user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36";
+
+    let client = Client::new();
+    let response = client
+        .get(url)
+        .header(USER_AGENT, user_agent)
+        .send()
+        .await?;
+    
+    let json = response.json::<Releases>().await?;
+    
+    Ok(json)
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_fetcher() {}
+}
