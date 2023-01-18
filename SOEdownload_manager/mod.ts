@@ -1,5 +1,6 @@
 import { parse } from "https://deno.land/std@0.173.0/flags/mod.ts"
 import { downloadLatestRelease } from "./updater/releases_downloader.ts"
+import { decompress } from "https://deno.land/x/zip@v1.2.3/mod.ts"
 
 const flags = parse(Deno.args, {
     boolean: [
@@ -24,7 +25,7 @@ const flags = parse(Deno.args, {
         launcher_releases_url: "https://api.github.com/repos/symphony-of-empires/SOEutil/releases",
         downloader_releases_url:
             "https://api.github.com/repos/symphony-of-empires/SOEutil/releases",
-        download_dir:".cache/updater",
+        download_dir: ".cache/updater",
         test_game_releases_url: "https://api.github.com/repos/yrenum/symphony-of-empires/releases",
     },
 })
@@ -33,5 +34,7 @@ if (flags.update_game) {
     const url = !flags.test
         ? new URL(flags.game_releases_url)
         : new URL(flags.test_game_releases_url)
-    downloadLatestRelease(url, flags.download_dir, "game.zip")
+
+    const archivePath = await downloadLatestRelease(url, flags.download_dir, "game.zip") as string
+    decompress(archivePath, "./", {overwrite:true})
 }
