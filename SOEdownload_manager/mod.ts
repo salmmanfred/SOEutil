@@ -18,6 +18,7 @@ const flags = parse(Deno.args, {
         "downloader_releases_url",
         "download_dir",
         "test_game_releases_url",
+        "test_launcher_releases_url",
     ],
     default: {
         game_releases_url:
@@ -27,6 +28,7 @@ const flags = parse(Deno.args, {
             "https://api.github.com/repos/symphony-of-empires/SOEutil/releases",
         download_dir: ".cache/updater",
         test_game_releases_url: "https://api.github.com/repos/yrenum/symphony-of-empires/releases",
+        test_launcher_releases_url: "https://api.github.com/repos/yrenum/SOEutil/releases",
     },
 })
 
@@ -35,6 +37,15 @@ if (flags.update_game) {
         ? new URL(flags.game_releases_url)
         : new URL(flags.test_game_releases_url)
 
-    const archivePath = await downloadLatestRelease(url, flags.download_dir, "game.zip") as string
-    decompress(archivePath, "./", {overwrite:true})
+    const archivePath = await downloadLatestRelease(url, flags.download_dir, "game.zip")
+    if (archivePath != undefined) decompress(archivePath, "./", { overwrite: true })
+}
+
+if (flags.update_launcher) {
+    const url = !flags.test
+        ? new URL(flags.launcher_releases_url)
+        : new URL(flags.test_launcher_releases_url)
+
+    const archivePath = await downloadLatestRelease(url, flags.download_dir, "launcher.zip")
+    if (archivePath != undefined) decompress(archivePath, "./", { overwrite: true })
 }
