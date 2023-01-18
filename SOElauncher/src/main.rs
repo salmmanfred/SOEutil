@@ -81,13 +81,6 @@ fn get_launcher_settings() -> LauncherSettings {
     LauncherSettings::new()
 }
 
-use tauri::utils::config;
-#[command]
-fn get_data_dir() -> String {
-    let (config, _) = config::parse("tauri.conf.json");
-    
-}
-
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
