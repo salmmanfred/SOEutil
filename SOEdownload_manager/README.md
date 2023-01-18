@@ -1,10 +1,12 @@
+# SOE download manager
+
 ## Docs
 
-### Options
+```sh
+soe_download_manager <options>
+```
 
-* --update_game
-* --update_launcher
-* --restart_game
-* --restart_launcher
-
-* --download_mod repo_url
+| Option            | Description                          |
+|-------------------|--------------------------------------|
+| --update_game     | Downloads the latest game update     |
+| --update_launcher | Downloads the latest launcher update |
