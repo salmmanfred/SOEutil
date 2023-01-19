@@ -15,7 +15,7 @@ invoke("get_launcher_settings").then((data) => {
 
 })
 
-console.log(settings);
+
 
 invoke("correct_pos").then((cor) => {
     if (cor) {
@@ -77,7 +77,7 @@ function settings_toggle_darkmode(id){
         r.style.setProperty('--mod_row', 'lightgray');
 
 
-        console.log("white");
+        
     }else{
         if (id != null){
         document.getElementById(id).className = "popup_button green"
@@ -86,12 +86,10 @@ function settings_toggle_darkmode(id){
         r.style.setProperty('--background_inverse', 'darkgray');
         r.style.setProperty('--mod_row', '#2e2e2e');
 
-        console.log("black");
+       
 
     }
-    if (id == null){
-        console.log("ran "+darkmode);
-    }
+    
     
     darkmode = !darkmode;
 
