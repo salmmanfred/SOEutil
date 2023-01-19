@@ -9,23 +9,13 @@ jobs:
   
     runs-on: ubuntu-latest
     steps:
-      - { name: "Checkout the code", uses: actions/checkout@v2 }
+      - { name: "Checkout the code", uses: actions/checkout@v3 }
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
+      - name: Install Rust
+        uses: actions-rs/toolchain@v2
+        with: { toolchain: stable }
 
       - name: Build launcher
         working-directory: ./SOEdownload_manager
         run: |
-          mkdir bin
-          deno compile --target x86_64-unknown-linux-gnu --output ./bin/download_manager mod.ts
-          deno compile --target x86_64-pc-windows-msvc --output ./bin/download_manager.exe mod.ts
-
-      - name: Upload release artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: download-manager-release
-          path: |
-            SOEdownload_manager/bin
+          cargo build --release
