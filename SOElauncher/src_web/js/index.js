@@ -3,9 +3,19 @@ const invoke = window.__TAURI__.invoke
 var response_container = document.getElementById("response")
 var settings = {
     active_mods: [],
+    darkmode: true,
 }
+var darkmode = settings.darkmode;
 
-invoke("get_launcher_settings").then((data) => (settings = data))
+
+invoke("get_launcher_settings").then((data) => {
+    settings = data;
+    darkmode = settings.darkmode;
+    settings_toggle_darkmode(null);
+
+})
+
+console.log(settings);
 
 invoke("correct_pos").then((cor) => {
     if (cor) {
@@ -48,6 +58,57 @@ function load_mods() {
     })
 }
 
+var r = document.querySelector(':root');
+
+
+
+
+
+
+function settings_toggle_darkmode(id){
+
+
+    if (darkmode){
+        if (id != null){
+        document.getElementById(id).className = "popup_button red"
+        }
+        r.style.setProperty('--background', 'white');
+        r.style.setProperty('--background_inverse', 'black');
+        r.style.setProperty('--mod_row', 'lightgray');
+
+
+        console.log("white");
+    }else{
+        if (id != null){
+        document.getElementById(id).className = "popup_button green"
+        }
+        r.style.setProperty('--background', '#272727');
+        r.style.setProperty('--background_inverse', 'darkgray');
+        r.style.setProperty('--mod_row', '#2e2e2e');
+
+        console.log("black");
+
+    }
+    if (id == null){
+        console.log("ran "+darkmode);
+    }
+    
+    darkmode = !darkmode;
+
+
+    settings.darkmode = !darkmode;
+
+    
+}
+
+function save_settings(){
+    console.log(settings);
+    invoke("save_launcher_settings", {settings: settings});
+}
+
+
+
+
 function toggle_mod(buttonId) {
     const button = document.getElementById(buttonId)
     const mod_name = document.getElementById(buttonId + "sub").innerText
@@ -68,9 +129,7 @@ function toggle_mod(buttonId) {
     console.log(settings.active_mods)
 }
 
-function test() {
-    invoke("test")
-}
+
 
 function close_popup() {
     document.getElementById("portal").innerHTML = ""

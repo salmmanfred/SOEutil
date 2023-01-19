@@ -62,6 +62,7 @@ use launcher_settings::LauncherSettings;
 #[command]
 fn save_launcher_settings(settings: LauncherSettings) {
     let json = serde_json::to_string(&settings);
+   
     if let Ok(json) = json {
         fs::write("./launcher_settings.json", json).unwrap();
     }

@@ -1,12 +1,26 @@
-/*buttons*/
 
+/*Variables*/
+:root{
+    --background: white;
+    --background_inverse: #272727;
+    --mod_row: lightgray;
+}
+
+
+
+
+
+
+/*buttons*/
+/*#380114*/
 /*standard button*/
 .main_button {
     width: 100%;
     height: 5em;
     margin: 0px;
     border-radius: 2px;
-    border: 1px solid #380114;
+    border: 1px solid var(--background_inverse);
+    background-color: var(--background);
     transition: 0.1s;
 }
 .main_button:hover{
@@ -19,16 +33,16 @@
     height: 5%;
     margin: 0px;
     border-radius: 2px;
-    border: 1px solid #380114;
+    border: 1px solid var(--background_inverse);
     transition: 0.1s;
     
 }
 .refresh_button:hover{
-    border: 2px solid #380114;
+    border: 2px solid var(--background_inverse);
 
 }
 .refresh_button:active{
-    border: 4px solid #380114;
+    border: 4px solid var(--background_inverse);
     transition: 0.2s;
 
 
@@ -43,8 +57,8 @@
     height: 5em;
     margin: 0px;
     border-radius: 2px;
-    
-    border: 1px solid #380114;
+    background-color: var(--background);
+    border: 1px solid var(--background_inverse);
     transition: 0.1s;
 }
 
@@ -54,7 +68,8 @@
 /*mod view related items*/
 .modrow{
     overflow: hidden;
-    background-color: lightgray;
+    background-color: var(--mod_row);
+    height: 3em;
 }
 .modrow .modname{
     float:left;
@@ -62,7 +77,8 @@
 .mod_button{
     float: right;
     width: 7%;
-    height: 3em;
+    height: 100%;
+    color: white;
     
 }
 
@@ -89,14 +105,19 @@ ul{
 
 }
 
+*{
+    color: var(--background_inverse);
 
+}
 
 html,
 body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: var(--background);
     margin: 0;
+
     font-family:  'Open Sans', sans-serif;
 }
 
@@ -138,7 +159,7 @@ footer {
 
 
 .b-w {
-    background-color: white;
+    background-color: var(--background);
 }
 
 .b-gt {
@@ -155,7 +176,8 @@ footer {
 }
 
 .card {
-    background-color: white;
+
+    background-color: var(--background);
     border-radius: 5px;
     width: 50%;
     padding: 3em;
