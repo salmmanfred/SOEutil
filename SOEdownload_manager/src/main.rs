@@ -37,7 +37,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let releases = fetch_releases(&args.launcher_releases_url).await?;
         let result = download_latest_release(releases).await;
 
-        if let Err(_) = result {
+        if let Ok(path) = result {
+            install_archive(path);
+        } else {
             warn!("Something went wrong during the launcher update");
         }
     }
