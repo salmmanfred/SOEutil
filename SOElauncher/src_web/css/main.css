@@ -4,6 +4,8 @@
     --background: white;
     --background_inverse: #272727;
     --mod_row: lightgray;
+    --fade_hover: darkgray;
+    --fade_click: black;
 }
 
 
@@ -25,7 +27,13 @@
 }
 .main_button:hover{
     width: 126%;
-    
+    background-color: var(--fade_hover);
+    transition: 0.1s;
+}
+.main_button:active{
+    background-color: var(--fade_click);
+    transition: 0.1s;
+
 }
 /*button for the refresh*/
 .refresh_button{
@@ -61,6 +69,15 @@
     border: 1px solid var(--background_inverse);
     transition: 0.1s;
 }
+.popup_button:hover{
+    background-color: var(--fade_hover);
+    transition: 0.1s;
+
+}
+.popup_button:active{
+    background-color: var(--fade_click);
+
+}
 
 
 
@@ -79,6 +96,8 @@
     width: 7%;
     height: 100%;
     color: white;
+    border: 0px solid var(--background_inverse);
+
     
 }
 
