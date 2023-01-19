@@ -1,0 +1,21 @@
+name: Build download manager
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    steps:
+      - { name: "Checkout the code", uses: actions/checkout@v3 }
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v2
+        with: { toolchain: stable }
+
+      - name: Build launcher
+        working-directory: ./SOEdownload_manager
+        run: |
+          cargo build --release

@@ -1,5 +1,4 @@
-name: CI
-
+name: Build launcher
 on:
   - push
   - pull_request
@@ -15,7 +14,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - { name: "Checkout the code", uses: actions/checkout@v2 }
+      - { name: "Checkout the code", uses: actions/checkout@v3 }
 
       - name: Setup Rust cache
         uses: actions/cache@v2
@@ -25,10 +24,9 @@ jobs:
             ~/.cargo/registry/index
             ~/.cargo/registry/cache
             ~/.cargo/git
-            ./src-tauri/target
 
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: actions-rs/toolchain@v2
         with: { toolchain: stable }
 
       - name: Install Ubuntu dependencies
@@ -44,8 +42,14 @@ jobs:
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v2
-        with:
-          name: release-${{ matrix.os }}
-          path: |
-            SOElauncher/target/release/SOElauncher
-            SOElauncher/target/release/SOElauncher.exe
+        if: matrix.os == 'windows-latest'
+          with:
+            name: release-windows
+            path: |
+              SOElauncher/target/release/SOElauncher.exe
+
+        if: matrix.os == 'ubuntu-latest'
+          with:
+            name: release-linux
+            path: |
+              SOElauncher/target/release/SOElauncher 

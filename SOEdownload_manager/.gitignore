@@ -1,0 +1,5 @@
+# For testing purpouses
+/.cache
+
+# Where the binaries are
+/target
