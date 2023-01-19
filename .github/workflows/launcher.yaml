@@ -40,16 +40,19 @@ jobs:
         run: |
           cargo build --release
 
-      - name: Upload release artifacts
+      - name: Upload Windows release artifacts
         uses: actions/upload-artifact@v2
         if: matrix.os == 'windows-latest'
-          with:
-            name: release-windows
-            path: |
-              SOElauncher/target/release/SOElauncher.exe
+        with:
+          name: release-windows
+          path: |
+            SOElauncher/target/release/SOElauncher.exe
 
+
+      - name: Upload Linux release artifacts
+        uses: actions/upload-artifact@v2
         if: matrix.os == 'ubuntu-latest'
-          with:
-            name: release-linux
-            path: |
-              SOElauncher/target/release/SOElauncher 
+        with:
+          name: release-linux
+          path: |
+            SOElauncher/target/release/SOElauncher 
