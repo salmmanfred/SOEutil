@@ -1,6 +1,6 @@
 // generated through https://app.quicktype.io/?l=rs
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 pub type Releases = Vec<Release>;
 
@@ -32,7 +32,7 @@ impl Release {
     }
     pub fn get_assets(&self) -> &Vec<Asset> {
         &self.assets
-    } 
+    }
 }
 
 #[derive(Serialize, Deserialize)]
@@ -50,6 +50,16 @@ pub struct Asset {
     created_at: String,
     updated_at: String,
     browser_download_url: String,
+}
+
+impl Asset {
+    pub fn get_name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn get_download_url(&self) -> &String {
+        &self.browser_download_url
+    }
 }
 
 #[derive(Serialize, Deserialize)]
