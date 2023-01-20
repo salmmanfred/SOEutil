@@ -28,6 +28,7 @@
 .main_button:hover{
     width: 126%;
     background-color: var(--fade_hover);
+    color:#272727;
     transition: 0.1s;
 }
 .main_button:active{
