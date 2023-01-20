@@ -1,11 +1,10 @@
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::env::consts::OS;
 
 use super::github::release::Releases;
 use log::{error, info};
 
-pub async fn download_latest_release(mut releases: Releases) -> Result<PathBuf, ()> {
+pub async fn download_latest_release(mut releases: Releases, file_name_contains:&str) -> Result<PathBuf, ()> {
     releases.retain(|release| !release.is_prerelease());
 
     if releases.is_empty() {
@@ -15,7 +14,7 @@ pub async fn download_latest_release(mut releases: Releases) -> Result<PathBuf, 
 
     for release in releases {
         for asset in release.get_assets() {
-            if asset.get_name().contains(OS) {
+            if asset.get_name().contains(file_name_contains) {
                 let result = reqwest::get(asset.get_download_url()).await;
 
                 if let Ok(response) = result {

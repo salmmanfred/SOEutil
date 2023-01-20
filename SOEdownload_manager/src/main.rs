@@ -1,6 +1,9 @@
 mod updater;
 use clap::Parser;
-use log::warn;
+use log::{warn, info};
+use simplelog::*;
+use std::env::consts::OS;
+use std::fs::File;
 use updater::downloader::download_latest_release;
 use updater::github::releases_fetcher::fetch_releases;
 use updater::installer::install_archive;
@@ -21,11 +24,20 @@ struct Args {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    
+    let _ = WriteLogger::init(
+        LevelFilter::Info,
+        Config::default(),
+        File::create("download_manager.log").unwrap(),
+    );
+
     let args = Args::parse();
 
     if args.update_game {
+        info!("Starting game update...");
+
         let releases = fetch_releases(&args.game_releases_url).await?;
-        let result = download_latest_release(releases).await;
+        let result = download_latest_release(releases, OS).await;
 
         if let Ok(path) = result {
             install_archive(path);
@@ -34,8 +46,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     if args.update_launcher {
+        info!("Starting launcher update...");
+
         let releases = fetch_releases(&args.launcher_releases_url).await?;
-        let result = download_latest_release(releases).await;
+        let result = download_latest_release(releases, OS).await;
 
         if let Ok(path) = result {
             install_archive(path);

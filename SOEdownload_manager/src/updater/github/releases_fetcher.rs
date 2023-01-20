@@ -12,9 +12,9 @@ pub async fn fetch_releases(url: &str) -> Result<Releases, Box<dyn std::error::E
         .send()
         .await?;
     
-    let json = response.json::<Releases>().await?;
+    let releases = response.json::<Releases>().await?;
     
-    Ok(json)
+    Ok(releases)
 }
 
 #[cfg(test)]

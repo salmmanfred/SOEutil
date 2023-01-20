@@ -13,3 +13,4 @@ reqwest = { version = "0.11", features = ["json"] }
 tokio = { version = "1.24.2", features = ["full"] }
 log = "0.4.17"
 zip = "0.6.3"
+simplelog = "0.12.0"
