@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: matrix.os == 'windows-latest'
         with:
-          name: release-windows
+          name: launcher-dev-release-windows
           path: |
             SOElauncher/target/release/SOElauncher.exe
 
@@ -53,6 +53,6 @@ jobs:
         uses: actions/upload-artifact@v2
         if: matrix.os == 'ubuntu-latest'
         with:
-          name: release-linux
+          name: launcher-dev-release-linux
           path: |
             SOElauncher/target/release/SOElauncher 
