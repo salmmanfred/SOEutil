@@ -19,3 +19,10 @@ jobs:
         working-directory: ./SOEdownload_manager
         run: |
           cargo build --release
+        
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: downloader-dev-release-linux
+          path: |
+            SOEdownload_manager/target/release/SOEdownload_manager 
