@@ -9,6 +9,7 @@ pub async fn download_latest_release(mut releases: Releases, file_name_contains:
     if !allow_release_candidates {
         releases.retain(|release| !release.is_prerelease());
     }
+    
 
     if releases.is_empty() {
         error!("There is no stable release in the specified repository");
@@ -26,9 +27,23 @@ pub async fn download_latest_release(mut releases: Releases, file_name_contains:
 
                     let updater_cache = Path::new(".cache/updater");
                     let file_path = updater_cache.join(asset.get_name());
+                    
+                    match fs::create_dir_all(updater_cache){
+                        Ok(_)=>{
 
-                    let _ = fs::create_dir_all(updater_cache);
-                    let _ = fs::write(&file_path, content);
+                        }
+                        _=>{
+                            error!("Error creating the file directroy {:?}", updater_cache);
+                        }
+                    }
+                    match fs::write(&file_path, content){
+                        Ok(_)=>{
+
+                        }
+                        _=>{
+                            error!("Error writing to a file {:?}",file_path);
+                        }
+                    }
 
                     return Ok(file_path);
                 } else {
