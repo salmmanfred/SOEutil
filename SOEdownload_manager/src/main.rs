@@ -18,9 +18,6 @@ struct Args {
     #[arg(long, action)]
     allow_prereleases: bool,
 
-    #[arg(long, action)]
-    clear_cache: bool,
-
     //"https://api.github.com/repos/yrenum/symphony-of-empires/releases"
     #[arg(default_value_t = String::from("https://api.github.com/repos/symphony-of-empires/symphony-of-empires/releases"))]
     game_releases_url: String,
@@ -64,11 +61,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    if args.clear_cache {
-        if let Err(_) = fs::remove_dir_all(".cache") {
-            error!("Couldn't remove the cache directory");
-        }
+
+    if let Err(_) = fs::remove_dir_all(".cache") {
+        error!("Couldn't delete the cache directory");
     }
+
 
     Ok(())
 }
