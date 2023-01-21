@@ -4,9 +4,9 @@ use std::path::{Path, PathBuf};
 use super::github::release::Releases;
 use log::{error, info};
 
-pub async fn download_latest_release(mut releases: Releases, file_name_contains:&str, allow_release_candidates:bool) -> Result<PathBuf, ()> {
+pub async fn download_latest_release(mut releases: Releases, file_name_contains:&str, allow_prereleases:bool) -> Result<PathBuf, ()> {
     
-    if !allow_release_candidates {
+    if !allow_prereleases {
         releases.retain(|release| !release.is_prerelease());
     }
     

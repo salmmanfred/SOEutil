@@ -16,7 +16,7 @@ struct Args {
     update_launcher: bool,
 
     #[arg(long, action)]
-    allow_release_candidates: bool,
+    allow_prereleases: bool,
 
     #[arg(long, action)]
     clear_cache: bool,
@@ -43,7 +43,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting game update...");
 
         let releases = fetch_releases(&args.game_releases_url).await?;
-        let result = download_latest_release(releases, OS, args.allow_release_candidates).await;
+        let result = download_latest_release(releases, OS, args.allow_prereleases).await;
 
         if let Ok(path) = result {
             install_archive(path);
@@ -55,7 +55,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting launcher update...");
 
         let releases = fetch_releases(&args.launcher_releases_url).await?;
-        let result = download_latest_release(releases, OS, args.allow_release_candidates).await;
+        let result = download_latest_release(releases, OS, args.allow_prereleases).await;
 
         if let Ok(path) = result {
             install_archive(path);
@@ -65,7 +65,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     if args.clear_cache {
-        if let Err(_) = fs::remove_dir_all("./cache") {
+        if let Err(_) = fs::remove_dir_all(".cache") {
             error!("Couldn't remove the cache directory");
         }
     }
