@@ -14,8 +14,12 @@ struct Args {
     update_game: bool,
     #[arg(long, action)]
     update_launcher: bool,
-    //"https://api.github.com/repos/symphony-of-empires/symphony-of-empires/releases"
-    #[arg(default_value_t = String::from("https://api.github.com/repos/yrenum/symphony-of-empires/releases"))]
+
+    #[arg(long, action)]
+    allow_release_candidates:bool,
+
+    //"https://api.github.com/repos/yrenum/symphony-of-empires/releases"
+    #[arg(default_value_t = String::from("https://api.github.com/repos/symphony-of-empires/symphony-of-empires/releases"))]
     game_releases_url: String,
 
     #[arg(default_value_t = String::from("https://api.github.com/repos/symphony-of-empires/SOEutil/releases"))]
@@ -37,7 +41,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting game update...");
 
         let releases = fetch_releases(&args.game_releases_url).await?;
-        let result = download_latest_release(releases, OS).await;
+        let result = download_latest_release(releases, OS, args.allow_release_candidates).await;
 
         if let Ok(path) = result {
             install_archive(path);
@@ -49,7 +53,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Starting launcher update...");
 
         let releases = fetch_releases(&args.launcher_releases_url).await?;
-        let result = download_latest_release(releases, OS).await;
+        let result = download_latest_release(releases, OS, args.allow_release_candidates).await;
 
         if let Ok(path) = result {
             install_archive(path);
