@@ -4,8 +4,11 @@ use std::path::{Path, PathBuf};
 use super::github::release::Releases;
 use log::{error, info};
 
-pub async fn download_latest_release(mut releases: Releases, file_name_contains:&str) -> Result<PathBuf, ()> {
-    releases.retain(|release| !release.is_prerelease());
+pub async fn download_latest_release(mut releases: Releases, file_name_contains:&str, allow_release_candidates:bool) -> Result<PathBuf, ()> {
+    
+    if !allow_release_candidates {
+        releases.retain(|release| !release.is_prerelease());
+    }
 
     if releases.is_empty() {
         error!("There is no stable release in the specified repository");
