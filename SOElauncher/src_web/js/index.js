@@ -3,12 +3,12 @@ const invoke = window.__TAURI__.invoke;
 var response_container = document.getElementById("response");
 var settings = {
     active_mods: [],
-    darkmode: true,
+    darkmode: false,
 };
 
 invoke("get_launcher_settings").then((data) => {
     settings = data;
-    settings_toggle_darkmode(null);
+    set_style(null);
 });
 
 invoke("correct_pos").then((cor) => {
@@ -52,25 +52,29 @@ function load_mods() {
     });
 }
 
-function settings_toggle_darkmode(id) {
+function set_style(id) {
     const r = document.querySelector(":root");
 
-    if (settings.darkmode) {
-        if (id != null) {
-            document.getElementById(id).className = "popup_button red";
-        }
-        r.style.setProperty("--background", "white");
-        r.style.setProperty("--background_inverse", "black");
-        r.style.setProperty("--mod_row", "lightgray");
-    } else {
+    if(settings.darkmode) {
         if (id != null) {
             document.getElementById(id).className = "popup_button green";
         }
         r.style.setProperty("--background", "#272727");
         r.style.setProperty("--background_inverse", "darkgray");
         r.style.setProperty("--mod_row", "#2e2e2e");
+    } else {
+        if (id != null) {
+            document.getElementById(id).className = "popup_button red";
+        }
+        r.style.setProperty("--background", "white");
+        r.style.setProperty("--background_inverse", "black");
+        r.style.setProperty("--mod_row", "lightgray");
     }
+}
+
+function toggle_style(id) {
     settings.darkmode = !settings.darkmode;
+    set_style(id);
 }
 
 function save_settings() {
@@ -106,16 +110,12 @@ function load(component) {
     return fetch(component + ".html").then((response) => response.text());
 }
 
-function popup(strs) {
-    invoke("report_backend", { data: strs })
-        .then((response) => {
-            str = response;
-            console.log("ok" + response);
-            load(str).then((text) => (document.getElementById("portal").innerHTML = text));
-        })
-        .catch((error) => {
-            console.log("err" + error);
-        });
+function popup(popup_name) {
+    const valid_popups = ["comp/website", "comp/not_imp", "comp/fetcherr", "comp/settings"];
+    if(!valid_popups.includes(popup_name))
+        return;
+
+    load(popup_name).then((text) => (document.getElementById("portal").innerHTML = text));
 }
 
 function open_web() {
@@ -127,6 +127,7 @@ function open_git() {
 }
 
 function start_game() {
+    save_settings();
     invoke("start", { data: settings.active_mods });
 }
 
