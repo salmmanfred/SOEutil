@@ -7,23 +7,7 @@ mod popup;
 use std::{fs, process::Command, thread, path::Path};
 use tauri::command;
 
-#[macro_use]
-extern crate handy_macros;
 
-#[command]
-fn report_backend(data: String) -> String {
-    match data.as_str() {
-        "comp/website" => return s!("comp/website"),
-        "comp/not_imp" => return s!("comp/not_imp"),
-        "comp/fetcherr" => return s!("comp/fetcherr"),
-        "comp/settings" => return s!("comp/settings"),
-
-
-        _ => {
-            s!("comp/err")
-        }
-    }
-}
 const MODDIR: &'static str = "./mods";
 #[command]
 fn fetch_modlist() -> Vec<String> {
@@ -88,7 +72,6 @@ fn main() {
             popup::open_web_git,
             popup::open_web,
             correct_pos,
-            report_backend,
             fetch_modlist,
             start,
             save_launcher_settings,

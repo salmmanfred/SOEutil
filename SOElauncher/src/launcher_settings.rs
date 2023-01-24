@@ -8,6 +8,6 @@ pub struct LauncherSettings {
 
 impl LauncherSettings {
     pub fn new() -> LauncherSettings {
-        LauncherSettings { active_mods: Vec::new(), darkmode:true }
+        LauncherSettings { active_mods: Vec::new(), darkmode:false }
     }
 }
