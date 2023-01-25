@@ -1,9 +1,9 @@
 mod updater;
 use clap::Parser;
-use log::{error, info, warn};
+use log::{info, warn};
 use simplelog::*;
 use std::env::consts::OS;
-use std::fs::{self, File};
+use std::fs::{File};
 use updater::downloader::download_latest_release;
 use updater::github::releases_fetcher::fetch_releases;
 use updater::installer::install_archive;
@@ -60,12 +60,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             warn!("Something went wrong during the launcher update");
         }
     }
-
-
-    if let Err(_) = fs::remove_dir_all(".cache") {
-        error!("Couldn't delete the cache directory");
-    }
-
 
     Ok(())
 }

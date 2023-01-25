@@ -8,7 +8,7 @@ use std::{fs, process::Command, thread, path::Path};
 use tauri::command;
 
 
-const MODDIR: &'static str = "./mods";
+const MODDIR: &str = "./mods";
 #[command]
 fn fetch_modlist() -> Vec<String> {
     let paths = fs::read_dir(MODDIR).unwrap();
@@ -24,16 +24,16 @@ fn correct_pos() -> bool {
     Path::new(MODDIR).exists()
 }
 #[command]
-fn start(data: Vec<String>) {
-    let mut s = String::new();
-    for x in data {
-        s.push_str(&format!("--mod {}  ", x));
+fn start(mods: Vec<String>) {
+    let mut args = String::new();
+    for mod_path in mods {
+        args.push_str(&format!("--mod {}  ", mod_path));
     }
 
-    println!("{}", s);
+    println!("{}", args);
     let _ = thread::spawn(|| {
         let _ = Command::new(format!("{}", "./SymphonyOfEmpires"))
-            .arg(s)
+            .arg(args)
             .output()
             .unwrap();
     });
@@ -57,7 +57,7 @@ fn get_launcher_settings() -> LauncherSettings {
     if Path::new("./launcher_settings.json").exists() {
         let data = fs::read_to_string("./launcher_settings.json");
         if let Ok(data) = data {
-            if let Ok(settings) = serde_json::from_str(&data.as_str()) {
+            if let Ok(settings) = serde_json::from_str(data.as_str()) {
                 return settings;
             }
         }
