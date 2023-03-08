@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == false
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == false || github.event_name == 'push'
     strategy:
       fail-fast: false
       matrix:
