@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-  
+    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == false
     runs-on: ubuntu-latest
     steps:
       - { name: "Checkout the code", uses: actions/checkout@v3 }
